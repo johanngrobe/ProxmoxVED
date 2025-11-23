@@ -1,0 +1,31 @@
+{
+    "name": "Split Pro",
+    "slug": "split-pro",
+    "categories": [
+      23
+    ],
+    "date_created": "2025-11-23",
+    "type": "ct",
+    "updateable": true,
+    "privileged": false,
+    "interface_port": 3000,
+    "website": "https://splitpro.app/",
+    "github": "https://github.com/oss-apps/split-pro",
+    "config_path": "/opt/split-pro/.env",
+    "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons/webp/split-pro.webp",
+    "description": "SplitPro aims to provide an open-source way to share expenses with your friends.",
+    "install_methods": [
+      {
+        "type": "default",
+        "script": "ct/split-pro.sh",
+        "resources": {
+          "cpu": 2,
+          "ram": 2048,
+          "hdd": 5,
+          "os": "debian",
+          "version": "13"
+        }
+      }
+    ],
+    "notes": []
+  }
