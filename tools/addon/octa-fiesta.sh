@@ -52,7 +52,7 @@ function uninstall() {
   rm -f "$HOME/.octo-fiesta"
   msg_ok "${APP} has been uninstalled"
   msg_info "Removing .NET SDK"
-  $STD apt-get remove -y dotnet-sdk-8.0
+  $STD apt-get remove -y dotnet-sdk-9.0
   $STD apt-get autoremove -y
   rm -f /tmp/packages-microsoft-prod.deb
   msg_ok "Removed .NET SDK"
@@ -97,16 +97,16 @@ function install() {
   if command -v dotnet > /dev/null 2>&1; then
     msg_ok ".NET already installed ($(dotnet --version))"
   else
-    msg_info "Installing .NET 8 SDK"
+    msg_info "Installing .NET 9 SDK"
 
     $STD wget https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb -O /tmp/packages-microsoft-prod.deb
     $STD dpkg -i /tmp/packages-microsoft-prod.deb
     rm -f /tmp/packages-microsoft-prod.deb
 
     $STD apt-get update
-    $STD apt-get install -y dotnet-sdk-8.0
+    $STD apt-get install -y dotnet-sdk-9.0
 
-    msg_ok "Installed .NET 8 SDK"
+    msg_ok "Installed .NET 9 SDK"
   fi
 
   rm -f "$HOME/.octo-fiesta"
@@ -228,7 +228,7 @@ fi
 msg_warn "${APP} is not installed."
 echo ""
 echo -e "${TAB}${INFO} This will install:"
-echo -e "${TAB}  - .NET 8 SDK"
+echo -e "${TAB}  - .NET 9 SDK"
 echo -e "${TAB}  - Octo-Fiesta Subsonic Proxy"
 echo ""
 

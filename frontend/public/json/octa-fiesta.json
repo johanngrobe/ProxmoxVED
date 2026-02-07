@@ -33,7 +33,7 @@
   },
   "notes": [
     {
-      "text": "Requires .NET 8 SDK (auto-installed if missing)",
+      "text": "Requires .NET 9 SDK (auto-installed if missing)",
       "type": "info"
     },
     {
