@@ -5,9 +5,9 @@
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
 # Source: https://github.com/V1ck3s/octo-fiesta
 
-source <(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/octa-fiesta/misc/core.func)
-source <(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/octa-fiesta/misc/tools.func)
-source <(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/octa-fiesta/misc/error_handler.func)
+source <(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/add/octo-fiesta/misc/core.func)
+source <(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/add/octo-fiesta/misc/tools.func)
+source <(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/add/octo-fiesta/misc/error_handler.func)
 
 set -Eeuo pipefail
 trap 'error_handler' ERR
@@ -179,7 +179,7 @@ EOF
 
   msg_info "Creating update script"
   cat <<'UPDATEEOF' >/usr/local/bin/update_octo_fiesta
-type=update bash -c "$(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/octa-fiesta/tools/addon/octa-fiesta.sh)"
+type=update bash -c "$(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/add/octo-fiesta/tools/addon/octo-fiesta.sh)"
 UPDATEEOF
   chmod +x /usr/local/bin/update_octo_fiesta
   msg_ok "Created update script (/usr/local/bin/update_octo_fiesta)"
