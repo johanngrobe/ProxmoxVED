@@ -94,10 +94,19 @@ function update() {
 }
 
 function install() {
-  if command -v dotnet > /dev/null 2>&1 && dotnet --list-sdks 2>/dev/null | grep -q "^9\."; then
-    msg_ok ".NET 9 SDK already installed ($(dotnet --version))"
+  DOTNET_VERSION=""
+  if command -v dotnet > /dev/null 2>&1; then
+    DOTNET_VERSION=$(dotnet --version 2>/dev/null || echo "")
+  fi
+
+  if [[ -n "$DOTNET_VERSION" ]] && dotnet --list-sdks 2>/dev/null | grep -q "^9\."; then
+    msg_ok ".NET 9 SDK already installed ($DOTNET_VERSION)"
   else
-    msg_info "Installing .NET 9 SDK"
+    if [[ -n "$DOTNET_VERSION" ]]; then
+      msg_info "Found .NET $DOTNET_VERSION, installing .NET 9 SDK"
+    else
+      msg_info "Installing .NET 9 SDK"
+    fi
 
     $STD wget https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb -O /tmp/packages-microsoft-prod.deb
     $STD dpkg -i /tmp/packages-microsoft-prod.deb
