@@ -1,0 +1,48 @@
+{
+  "name": "Octo-Fiesta",
+  "slug": "octa-fiesta",
+  "categories": [
+    9
+  ],
+  "date_created": "2026-02-07",
+  "type": "addon",
+  "updateable": true,
+  "privileged": false,
+  "interface_port": 5274,
+  "documentation": "https://github.com/V1ck3s/octo-fiesta",
+  "website": "https://github.com/V1ck3s/octo-fiesta",
+  "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/octo-fiesta.webp",
+  "config_path": "/opt/octo-fiesta/appsettings.json",
+  "description": "A Subsonic API proxy server that transparently integrates multiple music streaming providers as sources. When a song is not available in your local Navidrome library, it is automatically fetched from your configured provider, downloaded, and served to your Subsonic-compatible client. The downloaded song is then added to your library, making it available locally for future listens.",
+  "install_methods": [
+    {
+      "type": "default",
+      "script": "tools/addon/octa-fiesta.sh",
+      "resources": {
+        "cpu": null,
+        "ram": null,
+        "hdd": null,
+        "os": null,
+        "version": null
+      }
+    }
+  ],
+  "default_credentials": {
+    "username": null,
+    "password": null
+  },
+  "notes": [
+    {
+      "text": "Requires .NET 8 SDK (auto-installed if missing)",
+      "type": "info"
+    },
+    {
+      "text": "Configure Qobuz and Deezer tokens in appsettings.json",
+      "type": "warning"
+    },
+    {
+      "text": "Update with: update_octo_fiesta",
+      "type": "info"
+    }
+  ]
+}
