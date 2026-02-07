@@ -15,7 +15,7 @@ trap 'error_handler' ERR
 APP="Octo-Fiesta"
 APP_TYPE="addon"
 INSTALL_PATH="/opt/octo-fiesta"
-CONFIG_PATH="/opt/octo-fiesta/appsettings.json"
+CONFIG_PATH="/opt/octo-fiesta/octo-fiesta/appsettings.json"
 DEFAULT_PORT=5274
 
 load_functions
@@ -77,7 +77,7 @@ function update() {
     msg_ok "Restored configuration"
 
     msg_info "Restoring dependencies"
-    cd "$INSTALL_PATH"
+    cd "$INSTALL_PATH/octo-fiesta"
     $STD dotnet restore
     msg_ok "Restored dependencies"
 
@@ -122,49 +122,13 @@ function install() {
   fetch_and_deploy_gh_release "octo-fiesta" "V1ck3s/octo-fiesta" "tarball" "latest" "$INSTALL_PATH"
 
   msg_info "Restoring dependencies"
-  cd "$INSTALL_PATH"
+  cd "$INSTALL_PATH/octo-fiesta"
   $STD dotnet restore
   msg_ok "Restored dependencies"
 
   msg_info "Building ${APP}"
   $STD dotnet build
   msg_ok "Built ${APP}"
-
-  msg_info "Creating configuration"
-
-  mkdir -p "$INSTALL_PATH/downloads"
-
-  cat <<EOF >"$CONFIG_PATH"
-{
-  "Subsonic": {
-    "Url": "http://localhost:4533",
-    "MusicService": "SquidWTF",
-    "AutoUpgradeQuality": false,
-    "EnableExternalPlaylists": true,
-    "PlaylistsDirectory": "playlists"
-  },
-  "Library": {
-    "DownloadPath": "./downloads"
-  },
-  "Qobuz": {
-    "UserAuthToken": "your-qobuz-token",
-    "UserId": "your-qobuz-user-id",
-    "Quality": "FLAC"
-  },
-  "Deezer": {
-    "Arl": "your-deezer-arl-token",
-    "ArlFallback": "",
-    "Quality": "FLAC"
-  },
-  "SquidWTF": {
-    "Source": "Qobuz",
-    "Quality": "auto",
-    "InstanceTimeoutSeconds": 5
-  }
-}
-EOF
-  chmod 600 "$CONFIG_PATH"
-  msg_ok "Created configuration"
 
   msg_info "Creating service"
   cat <<EOF >"$SERVICE_PATH"
@@ -175,7 +139,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-WorkingDirectory=${INSTALL_PATH}
+WorkingDirectory=${INSTALL_PATH}/octo-fiesta
 ExecStart=/usr/bin/dotnet run
 Restart=always
 RestartSec=10

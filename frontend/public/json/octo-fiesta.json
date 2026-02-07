@@ -12,7 +12,7 @@
   "documentation": "https://github.com/V1ck3s/octo-fiesta",
   "website": "https://github.com/V1ck3s/octo-fiesta",
   "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/octo-fiesta.webp",
-  "config_path": "/opt/octo-fiesta/appsettings.json",
+  "config_path": "/opt/octo-fiesta/octo-fiesta/appsettings.json",
   "description": "A Subsonic API proxy server that transparently integrates multiple music streaming providers as sources. When a song is not available in your local Navidrome library, it is automatically fetched from your configured provider, downloaded, and served to your Subsonic-compatible client. The downloaded song is then added to your library, making it available locally for future listens.",
   "install_methods": [
     {
