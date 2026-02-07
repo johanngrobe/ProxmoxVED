@@ -94,8 +94,8 @@ function update() {
 }
 
 function install() {
-  if command -v dotnet > /dev/null 2>&1; then
-    msg_ok ".NET already installed ($(dotnet --version))"
+  if command -v dotnet > /dev/null 2>&1 && dotnet --list-sdks 2>/dev/null | grep -q "^9\."; then
+    msg_ok ".NET 9 SDK already installed ($(dotnet --version))"
   else
     msg_info "Installing .NET 9 SDK"
 
