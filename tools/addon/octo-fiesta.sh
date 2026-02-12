@@ -23,11 +23,11 @@ load_functions
 function header_info {
   clear
   cat <<"EOF"
-   ____       __          _______________        __
-  / __ \____ / /____     / ____(_)__  / /_____ _/ /___ _
- / / / / __ `/ __/ _ \  / /_  / / /_/ / / ___/ __ `/ __ `/
-/ /_/ / /_/ / /_/ /_/ / / __/ / / __/ /  (__  ) /_/ / /_/ /
-\____/\__,_/\__/\____/ /_/  /_/_/  /_/____/\__,_/\__,_/
+   ____      __           ______            __
+  / __ \ ___/ /____      / ____(_)__  _____/ /_____ _
+ / / / // __/ __/ _ \   / /_  / / _ \/ ___/ __/ __ `/
+/ /_/ // /_/ /_/ /_/ / / __/ / /  __(__  ) /_/ /_/ /
+\____/ \__/\__/\____/ /_/   /_/\___/____/\__/\__,_/
 
 EOF
 }
@@ -156,8 +156,6 @@ type=update bash -c "$(curl -fsSL https://raw.githubusercontent.com/johanngrobe/
 UPDATEEOF
   chmod +x /usr/local/bin/update_octo_fiesta
   msg_ok "Created update script (/usr/local/bin/update_octo_fiesta)"
-
-  echo ""
   msg_ok "${APP} is reachable at: ${BL}http://${LOCAL_IP}:${DEFAULT_PORT}${CL}"
 }
 
