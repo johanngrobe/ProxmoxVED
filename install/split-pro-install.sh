@@ -35,12 +35,7 @@ PG_DB_NAME="splitpro" PG_DB_USER="splitpro" setup_postgresql_db
 
 get_lxc_ip
 
-msg_info "Downloading Split-Pro"
-RELEASE=$(curl -s https://api.github.com/repos/oss-apps/split-pro/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3)}')
-mkdir -p /opt/split-pro
-$STD git clone --depth 1 --branch ${RELEASE} https://github.com/oss-apps/split-pro.git /opt/split-pro
-echo "${RELEASE}" >/opt/split-pro_version.txt
-msg_ok "Downloaded Split-Pro ${RELEASE}"
+fetch_and_deploy_gh_release "split-pro" "oss-apps/split-pro" "tarball" "latest" "/opt/split-pro"
 
 msg_info "Installing Dependencies"
 cd /opt/split-pro
