@@ -28,7 +28,7 @@ function update_script() {
     exit
   fi
 
-  if check_for_gh_release "split-pro" "oss-apps/split-pro"; then
+  if check_for_gh_release "splitpro" "oss-apps/split-pro"; then
     msg_info "Stopping Service"
     systemctl stop splitpro
     msg_ok "Stopped Service"
@@ -37,7 +37,7 @@ function update_script() {
     cp /opt/splitpro/.env /tmp/splitpro_backup
     msg_ok "Backed up Data"
 
-    CLEAN_INSTALL=1 fetch_and_deploy_gh_release "split-pro" "oss-apps/split-pro" "tarball" "latest" "/opt/splitpro"
+    CLEAN_INSTALL=1 fetch_and_deploy_gh_release "splitpro" "oss-apps/split-pro" "tarball" "latest" "/opt/splitpro"
 
     msg_info "Building Application"
     cd /opt/splitpro

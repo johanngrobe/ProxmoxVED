@@ -33,7 +33,7 @@ msg_ok "Installed pg_cron Extension"
 PG_DB_NAME="splitpro" PG_DB_USER="splitpro" setup_postgresql_db
 
 get_lxc_ip
-fetch_and_deploy_gh_release "split-pro" "oss-apps/split-pro" "tarball" "latest" "/opt/splitpro"
+fetch_and_deploy_gh_release "splitpro" "oss-apps/split-pro" "tarball" "latest" "/opt/splitpro"
 
 msg_info "Installing Dependencies"
 cd /opt/splitpro
