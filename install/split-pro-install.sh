@@ -25,13 +25,16 @@ msg_info "Installing pg_cron Extension"
 $STD apt install -y postgresql-17-cron
 sed -i "/^#shared_preload_libraries/s/^#//" /etc/postgresql/17/main/postgresql.conf
 sed -i "/^shared_preload_libraries/s/''/pg_cron/" /etc/postgresql/17/main/postgresql.conf
-$STD sudo -u postgres psql -c "ALTER SYSTEM SET cron.database_name = 'postgres'"
+$STD sudo -u postgres psql -c "ALTER SYSTEM SET cron.database_name = 'splitpro'"
 $STD sudo -u postgres psql -c "ALTER SYSTEM SET cron.timezone = 'UTC'"
 systemctl restart postgresql
-$STD sudo -u postgres psql -c "CREATE EXTENSION IF NOT EXISTS pg_cron"
 msg_ok "Installed pg_cron Extension"
 
 PG_DB_NAME="splitpro" PG_DB_USER="splitpro" setup_postgresql_db
+
+msg_info "Enabling pg_cron in splitpro Database"
+$STD sudo -u postgres psql -d splitpro -c "CREATE EXTENSION IF NOT EXISTS pg_cron"
+msg_ok "Enabled pg_cron in splitpro Database"
 
 get_lxc_ip
 
