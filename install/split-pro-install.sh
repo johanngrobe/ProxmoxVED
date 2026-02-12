@@ -30,7 +30,7 @@ sed -i "/^shared_preload_libraries/s/''/pg_cron/" /etc/postgresql/17/main/postgr
 systemctl restart postgresql
 $STD sudo -u postgres psql -c "ALTER SYSTEM SET cron.database_name = 'splitpro'"
 $STD sudo -u postgres psql -c "ALTER SYSTEM SET cron.timezone = 'UTC'"
-systemctl reload postgresql
+systemctl restart postgresql
 $STD sudo -u postgres psql -d splitpro -c "CREATE EXTENSION IF NOT EXISTS pg_cron"
 $STD sudo -u postgres psql -d splitpro -c "GRANT USAGE ON SCHEMA cron TO splitpro"
 $STD sudo -u postgres psql -d splitpro -c "GRANT ALL ON ALL TABLES IN SCHEMA cron TO splitpro"
