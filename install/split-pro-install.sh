@@ -19,7 +19,7 @@ $STD apt install -y \
 msg_ok "Installed Dependencies"
 
 NODE_VERSION="22" NODE_MODULE="pnpm" setup_nodejs
-PG_VERSION="17" PG_MODULE="cron" setup_postgresql
+PG_VERSION="17" PG_MODULES="cron" setup_postgresql
 
 msg_info "Installing pg_cron Extension"
 sudo -u postgres psql -c "ALTER SYSTEM SET cron.database_name = 'postgres'"
