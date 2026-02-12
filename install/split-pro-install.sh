@@ -19,9 +19,12 @@ $STD apt install -y \
 msg_ok "Installed Dependencies"
 
 NODE_VERSION="22" NODE_MODULE="pnpm" setup_nodejs
-PG_VERSION="17" PG_MODULES="cron" setup_postgresql
+PG_VERSION="17" setup_postgresql
 
 msg_info "Installing pg_cron Extension"
+$STD apt install -y postgresql-17-cron
+sed -i "/^#shared_preload_libraries/s/^#//" /etc/postgresql/17/main/postgresql.conf
+sed -i "/^shared_preload_libraries/s/''/pg_cron/" /etc/postgresql/17/main/postgresql.conf
 sudo -u postgres psql -c "ALTER SYSTEM SET cron.database_name = 'postgres'"
 sudo -u postgres psql -c "ALTER SYSTEM SET cron.timezone = 'UTC'"
 systemctl restart postgresql
