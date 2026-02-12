@@ -23,21 +23,31 @@ function update_script() {
   check_container_storage
   check_container_resources
 
-  if [[ ! -d /opt/splitpro ]]; then
+  if [[ ! -d /opt/split-pro ]]; then
     msg_error "No ${APP} Installation Found!"
     exit
   fi
 
-  if check_for_gh_release "split-pro" "oss-apps/split-pro"; then
+  RELEASE=$(curl -s https://api.github.com/repos/oss-apps/split-pro/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3)}')
+  CURRENT_VERSION=$(cat /opt/split-pro_version.txt 2>/dev/null || echo "unknown")
+
+  if [[ "${RELEASE}" != "${CURRENT_VERSION}" ]]; then
+    msg_info "Updating from ${CURRENT_VERSION} to ${RELEASE}"
+
     msg_info "Stopping Service"
-    systemctl stop splitpro
+    systemctl stop split-pro
     msg_ok "Stopped Service"
 
     msg_info "Backing up Data"
     cp /opt/split-pro/.env /tmp/split-pro_backup
     msg_ok "Backed up Data"
 
-    CLEAN_INSTALL=1 fetch_and_deploy_gh_release "split-pro" "oss-apps/split-pro" "tarball" "latest" "/opt/splitpro"
+    msg_info "Downloading Update"
+    rm -rf /opt/split-pro
+    mkdir -p /opt/split-pro
+    $STD git clone --depth 1 --branch ${RELEASE} https://github.com/oss-apps/split-pro.git /opt/split-pro
+    echo "${RELEASE}" >/opt/split-pro_version.txt
+    msg_ok "Downloaded Update"
 
     msg_info "Building Application"
     cd /opt/split-pro
@@ -53,7 +63,9 @@ function update_script() {
     msg_info "Starting Service"
     systemctl start split-pro
     msg_ok "Started Service"
-    msg_ok "Updated successfully!"
+    msg_ok "Updated to ${RELEASE} successfully!"
+  else
+    msg_ok "Already on latest version ${CURRENT_VERSION}"
   fi
   exit
 }
