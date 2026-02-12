@@ -19,7 +19,7 @@ $STD apt install -y \
 msg_ok "Installed Dependencies"
 
 NODE_VERSION="22" NODE_MODULE="pnpm" setup_nodejs
-PG_VERSION="17" PG_MODOLUES="cron" setup_postgresql
+PG_VERSION="17" PG_MODOLUES="pg_cron" setup_postgresql
 
 #msg_info "Installing pg_cron Extension"
 #$STD apt install -y postgresql-17-cron
