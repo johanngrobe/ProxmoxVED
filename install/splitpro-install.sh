@@ -18,10 +18,12 @@ $STD apt install -y \
   openssl
 msg_ok "Installed Dependencies"
 
-NODE_VERSION="22" NODE_MODULE="pnpm" setup_nodejs()
-PG_VERSION="17" PG_MODULES="cron" setup_postgresql()
+NODE_VERSION="22" NODE_MODULE="pnpm" setup_nodejs
+PG_VERSION="17" setup_postgresql
 
 msg_info "Installing pg_cron Extension"
+PG_MAJOR=$(sudo -u postgres psql -tAc "SELECT current_setting('server_version_num')::int / 10000")
+$STD apt install -y postgresql-${PG_MAJOR}-cron
 sudo -u postgres psql -c "ALTER SYSTEM SET cron.database_name = 'postgres'"
 sudo -u postgres psql -c "ALTER SYSTEM SET cron.timezone = 'UTC'"
 systemctl restart postgresql

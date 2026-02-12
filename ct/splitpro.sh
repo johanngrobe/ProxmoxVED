@@ -5,7 +5,7 @@ source <(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/add
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
 # Source: https://github.com/oss-apps/split-pro
 
-APP="SplitPro"
+APP="Split Pro"
 var_tags="${var_tags:-finance;expense-sharing}"
 var_cpu="${var_cpu:-1}"
 var_ram="${var_ram:-1024}"
