@@ -34,6 +34,8 @@ PG_DB_NAME="splitpro" PG_DB_USER="splitpro" setup_postgresql_db
 
 msg_info "Enabling pg_cron in splitpro Database"
 $STD sudo -u postgres psql -d splitpro -c "CREATE EXTENSION IF NOT EXISTS pg_cron"
+$STD sudo -u postgres psql -d splitpro -c "GRANT USAGE ON SCHEMA cron TO splitpro"
+$STD sudo -u postgres psql -d splitpro -c "GRANT ALL ON ALL TABLES IN SCHEMA cron TO splitpro"
 msg_ok "Enabled pg_cron in splitpro Database"
 
 get_lxc_ip
