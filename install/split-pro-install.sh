@@ -19,11 +19,9 @@ $STD apt install -y \
 msg_ok "Installed Dependencies"
 
 NODE_VERSION="22" NODE_MODULE="pnpm" setup_nodejs
-PG_VERSION="17" setup_postgresql
+PG_VERSION="17" PG_MODULE="cron" setup_postgresql
 
 msg_info "Installing pg_cron Extension"
-PG_MAJOR=$(sudo -u postgres psql -tAc "SELECT current_setting('server_version_num')::int / 10000")
-$STD apt install -y postgresql-${PG_MAJOR}-cron
 sudo -u postgres psql -c "ALTER SYSTEM SET cron.database_name = 'postgres'"
 sudo -u postgres psql -c "ALTER SYSTEM SET cron.timezone = 'UTC'"
 systemctl restart postgresql
@@ -33,24 +31,24 @@ msg_ok "Installed pg_cron Extension"
 PG_DB_NAME="splitpro" PG_DB_USER="splitpro" setup_postgresql_db
 
 get_lxc_ip
-fetch_and_deploy_gh_release "splitpro" "oss-apps/split-pro" "tarball" "latest" "/opt/splitpro"
+fetch_and_deploy_gh_release "split-pro" "oss-apps/split-pro" "tarball" "latest" "/opt/splitpro"
 
 msg_info "Installing Dependencies"
-cd /opt/splitpro
+cd /opt/split-pro
 $STD pnpm install --frozen-lockfile
 msg_ok "Installed Dependencies"
 
 msg_info "Building Application"
-cd /opt/splitpro
+cd /opt/split-pro
 $STD pnpm build
 msg_ok "Built Application"
 
-msg_info "Configuring SplitPro"
-cd /opt/splitpro
-mkdir -p /opt/splitpro_data/uploads
-ln -sf /opt/splitpro_data/uploads /opt/splitpro/uploads
+msg_info "Configuring Split Pro"
+cd /opt/split-pro
+mkdir -p /opt/split-pro_data/uploads
+ln -sf /opt/split-pro_data/uploads /opt/split-pro/uploads
 NEXTAUTH_SECRET=$(openssl rand -base64 32)
-cat <<EOF >/opt/splitpro/.env
+cat <<EOF >/opt/split-pro/.env
 DATABASE_URL=postgresql://${PG_DB_USER}:${PG_DB_PASS}@localhost:5432/${PG_DB_NAME}
 NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
 NEXTAUTH_URL=http://${LOCAL_IP}:3000
@@ -58,30 +56,30 @@ DEFAULT_HOMEPAGE=/home
 CLEAR_CACHE_CRON_RULE=0 2 * * 0
 CACHE_RETENTION_INTERVAL=2 days
 EOF
-cd /opt/splitpro
+cd /opt/split-pro
 $STD pnpm exec prisma migrate deploy
-msg_ok "Configured SplitPro"
+msg_ok "Configured Split Pro"
 
 msg_info "Creating Service"
-cat <<EOF >/etc/systemd/system/splitpro.service
+cat <<EOF >/etc/systemd/system/split-pro.service
 [Unit]
-Description=SplitPro
+Description=Split Pro
 After=network.target postgresql.service
 Requires=postgresql.service
 
 [Service]
 Type=simple
 User=root
-WorkingDirectory=/opt/splitpro
-EnvironmentFile=/opt/splitpro/.env
-ExecStart=/usr/bin/node /opt/splitpro/.next/standalone/server.js
+WorkingDirectory=/opt/split-pro
+EnvironmentFile=/opt/split-pro/.env
+ExecStart=/usr/bin/node /opt/split-pro/.next/standalone/server.js
 Restart=on-failure
 RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl enable -q --now splitpro
+systemctl enable -q --now split-pro
 msg_ok "Created Service"
 
 motd_ssh

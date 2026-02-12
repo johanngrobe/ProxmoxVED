@@ -1,6 +1,6 @@
 {
     "name": "Split Pro",
-    "slug": "splitpro",
+    "slug": "split-pro",
     "categories": [
         12
     ],
@@ -12,12 +12,12 @@
     "documentation": "https://github.com/oss-apps/split-pro",
     "website": "https://github.com/oss-apps/split-pro",
     "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/webp/splitpro.webp",
-    "config_path": "/opt/splitpro/.env",
+    "config_path": "/opt/split-pro/.env",
     "description": "SplitPro is a self-hosted, open source way to share expenses with friends. It is designed as a replacement for Splitwise.",
     "install_methods": [
         {
             "type": "default",
-            "script": "ct/splitpro.sh",
+            "script": "ct/split-pro.sh",
             "resources": {
                 "cpu": 2,
                 "ram": 2048,

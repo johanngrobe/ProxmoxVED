@@ -5,7 +5,7 @@ source <(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/add
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
 # Source: https://github.com/oss-apps/split-pro
 
-APP="Split Pro"
+APP="Split-Pro"
 var_tags="${var_tags:-finance;expense-sharing}"
 var_cpu="${var_cpu:-1}"
 var_ram="${var_ram:-1024}"
@@ -28,30 +28,30 @@ function update_script() {
     exit
   fi
 
-  if check_for_gh_release "splitpro" "oss-apps/split-pro"; then
+  if check_for_gh_release "split-pro" "oss-apps/split-pro"; then
     msg_info "Stopping Service"
     systemctl stop splitpro
     msg_ok "Stopped Service"
 
     msg_info "Backing up Data"
-    cp /opt/splitpro/.env /tmp/splitpro_backup
+    cp /opt/split-pro/.env /tmp/split-pro_backup
     msg_ok "Backed up Data"
 
-    CLEAN_INSTALL=1 fetch_and_deploy_gh_release "splitpro" "oss-apps/split-pro" "tarball" "latest" "/opt/splitpro"
+    CLEAN_INSTALL=1 fetch_and_deploy_gh_release "split-pro" "oss-apps/split-pro" "tarball" "latest" "/opt/splitpro"
 
     msg_info "Building Application"
-    cd /opt/splitpro
+    cd /opt/split-pro
     $STD pnpm install --frozen-lockfile
     $STD pnpm build
-    cp /tmp/splitpro_backup /opt/splitpro/.env
-    rm -f /tmp/splitpro_backup
-    ln -sf /opt/splitpro_data/uploads /opt/splitpro/uploads
-    cd /opt/splitpro
+    cp /tmp/split-pro_backup /opt/split-pro/.env
+    rm -f /tmp/split-pro_backup
+    ln -sf /opt/split-pro_data/uploads /opt/split-pro/uploads
+    cd /opt/split-pro
     $STD pnpm exec prisma migrate deploy
     msg_ok "Built Application"
 
     msg_info "Starting Service"
-    systemctl start splitpro
+    systemctl start split-pro
     msg_ok "Started Service"
     msg_ok "Updated successfully!"
   fi
