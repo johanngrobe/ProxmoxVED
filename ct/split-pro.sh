@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-source <(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/add/splitpro/misc/build.func)
+source <(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/dev/split-pro/misc/build.func)
 # Copyright (c) 2021-2026 community-scripts ORG
 # Author: johanngrobe
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
 # Source: https://github.com/oss-apps/split-pro
 
-APP="Split-Pro"
+APP="Split Pro"
 var_tags="${var_tags:-finance;expense-sharing}"
 var_cpu="${var_cpu:-2}"
 var_ram="${var_ram:-4096}"
@@ -24,7 +24,7 @@ function update_script() {
   check_container_resources
 
   if [[ ! -d /opt/split-pro ]]; then
-    msg_error "No ${APP} Installation Found!"
+    msg_error "No Split Pro Installation Found!"
     exit
   fi
 
@@ -34,7 +34,7 @@ function update_script() {
     msg_ok "Stopped Service"
 
     msg_info "Backing up Data"
-    cp /opt/split-pro/.env /tmp/split-pro_backup
+    cp /opt/split-pro/.env /opt/split-pro.env
     msg_ok "Backed up Data"
 
     CLEAN_INSTALL=1 fetch_and_deploy_gh_release "split-pro" "oss-apps/split-pro" "tarball" "latest" "/opt/split-pro"
@@ -43,19 +43,16 @@ function update_script() {
     cd /opt/split-pro
     $STD pnpm install --frozen-lockfile
     $STD pnpm build
-    cp /tmp/split-pro_backup /opt/split-pro/.env
-    rm -f /tmp/split-pro_backup
+    cp /opt/split-pro.env /opt/split-pro/.env
+    rm -f /opt/split-pro.env
     ln -sf /opt/split-pro_data/uploads /opt/split-pro/uploads
-    cd /opt/split-pro
     $STD pnpm exec prisma migrate deploy
     msg_ok "Built Application"
 
     msg_info "Starting Service"
     systemctl start split-pro
     msg_ok "Started Service"
-    msg_ok "Updated Successfully"
-  else
-    msg_ok "No update required"
+    msg_ok "Updated successfully!"
   fi
   exit
 }

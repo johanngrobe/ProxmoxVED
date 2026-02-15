@@ -36,8 +36,6 @@ $STD sudo -u postgres psql -d splitpro -c "GRANT USAGE ON SCHEMA cron TO splitpr
 $STD sudo -u postgres psql -d splitpro -c "GRANT ALL ON ALL TABLES IN SCHEMA cron TO splitpro"
 msg_ok "Setup pg_cron complete"
 
-get_lxc_ip
-
 fetch_and_deploy_gh_release "split-pro" "oss-apps/split-pro" "tarball" "latest" "/opt/split-pro"
 
 msg_info "Installing Dependencies"
@@ -55,13 +53,16 @@ sed -i "s|^DATABASE_URL=.*|DATABASE_URL=\"postgresql://${PG_DB_USER}:${PG_DB_PAS
 sed -i "s|^NEXTAUTH_SECRET=.*|NEXTAUTH_SECRET=\"${NEXTAUTH_SECRET}\"|" .env
 sed -i "s|^NEXTAUTH_URL=.*|NEXTAUTH_URL=\"http://${LOCAL_IP}:3000\"|" .env
 sed -i "s|^NEXTAUTH_URL_INTERNAL=.*|NEXTAUTH_URL_INTERNAL=\"http://localhost:3000\"|" .env
-cat >> /opt/split-pro/.env <<'EOF'
-EOF
+sed -i "/^POSTGRES_CONTAINER_NAME=/d" .env
+sed -i "/^POSTGRES_USER=/d" .env
+sed -i "/^POSTGRES_PASSWORD=/d" .env
+sed -i "/^POSTGRES_DB=/d" .env
+sed -i "/^POSTGRES_PORT=/d" .env
 $STD pnpm build
 $STD pnpm exec prisma migrate deploy
 msg_ok "Built Split Pro"
 
-msg_info "Creating Split Pro Service"
+msg_info "Creating Service"
 cat <<EOF >/etc/systemd/system/split-pro.service
 [Unit]
 Description=Split Pro
@@ -81,7 +82,7 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 systemctl enable -q --now split-pro
-msg_ok "Created Split Pro Service"
+msg_ok "Created Service"
 
 motd_ssh
 customize
