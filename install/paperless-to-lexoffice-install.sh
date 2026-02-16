@@ -13,6 +13,10 @@ setting_up_container
 network_check
 update_os
 
+msg_info "Installing Dependencies"
+$STD apt install -y git
+msg_ok "Installed Dependencies"
+
 setup_uv
 
 msg_info "Deploying Paperless-to-Lexoffice"
