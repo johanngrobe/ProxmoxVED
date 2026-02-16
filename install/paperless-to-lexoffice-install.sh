@@ -61,7 +61,7 @@ After=network.target
 Type=simple
 WorkingDirectory=/opt/paperless-to-lexoffice/source
 EnvironmentFile=/opt/paperless-to-lexoffice/.env
-ExecStart=/opt/paperless-to-lexoffice/.venv/bin/python paperless-search.py
+ExecStart=/opt/paperless-to-lexoffice/.venv/bin/python -u paperless-search.py
 Restart=always
 RestartSec=5
 
