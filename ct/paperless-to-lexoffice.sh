@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
+
 source <(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/dev/paperless-to-lexoffice/misc/build.func)
 # Copyright (c) 2021-2026 community-scripts ORG
-# Author: Slaviša Arežina (tremor021)
+# Author: johanngrobe
 # License: MIT | https://github.com/community-scripts/ProxmoxVED/raw/main/LICENSE
-# Source: https://www.powerdns.com/
+# Source: https://github.com/stefanlachner/paperless-to-lexoffice
 
-APP="PowerDNS"
-var_tags="${var_tags:-dns}"
+APP="paperless-to-lexoffice"
+var_tags="${var_tags:-business;sync}"
 var_cpu="${var_cpu:-1}"
-var_ram="${var_ram:-1024}"
+var_ram="${var_ram:-512}"
 var_disk="${var_disk:-4}"
 var_os="${var_os:-debian}"
 var_version="${var_version:-13}"
@@ -23,16 +24,28 @@ function update_script() {
   header_info
   check_container_storage
   check_container_resources
-  if [[ ! -d /opt/poweradmin ]]; then
+
+  if [[ ! -d /opt/paperless-to-lexoffice ]]; then
     msg_error "No ${APP} Installation Found!"
     exit
   fi
 
-  msg_info "Updating Debian LXC"
-  $STD apt update
-  $STD apt upgrade -y
-  msg_ok "Updated Debian LXC"
-  cleanup_lxc
+  msg_info "Stopping ${APP}"
+  systemctl stop paperless-to-lexoffice
+  msg_ok "Stopped ${APP}"
+
+  msg_info "Updating ${APP}"
+  cd /opt/paperless-to-lexoffice
+  $STD git pull
+  cd /opt/paperless-to-lexoffice/source
+  $STD uv pip install -r requirements.txt
+  msg_ok "Updated ${APP}"
+
+  msg_info "Starting ${APP}"
+  systemctl start paperless-to-lexoffice
+  msg_ok "Started ${APP}"
+
+  msg_ok "Updated Successfully!"
   exit
 }
 
@@ -42,5 +55,5 @@ description
 
 msg_ok "Completed Successfully!\n"
 echo -e "${CREATING}${GN}${APP} setup has been successfully initialized!${CL}"
-echo -e "${INFO}${YW} Access it using the following URL:${CL}"
-echo -e "${TAB}${GATEWAY}${BGN}http://${IP}${CL}"
+echo -e "${INFO}${YW} Configure the service by editing:${CL}"
+echo -e "${TAB}${GATEWAY}${BGN}/opt/paperless-to-lexoffice/.env${CL}"
