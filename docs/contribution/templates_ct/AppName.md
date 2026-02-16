@@ -52,7 +52,7 @@ source <(curl -s https://raw.githubusercontent.com/[USER]/[REPO]/refs/heads/[BRA
 Final script:
 
 ```bash
-source <(curl -s https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/dev/paperless-to-lexoffice/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/refs/heads/dev/paperless-to-lexoffice/misc/build.func)
 ```
 
 > [!CAUTION]

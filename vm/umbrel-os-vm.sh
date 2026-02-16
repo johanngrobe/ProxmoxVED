@@ -4,7 +4,7 @@
 # Author: MickLesk (CanbiZ)
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
 
-source /dev/stdin <<<$(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/dev/paperless-to-lexoffice/misc/api.func)
+source /dev/stdin <<<$(curl -fsSL https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/refs/heads/dev/paperless-to-lexoffice/misc/api.func)
 source <(curl -fsSL https://git.community-scripts.org/community-scripts/ProxmoxVED/raw/branch/main/misc/vm-core.func)
 load_functions
 

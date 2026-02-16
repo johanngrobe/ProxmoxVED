@@ -1,6 +1,6 @@
 <div align="center">
   <a href="#">
-    <img src="https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/dev/paperless-to-lexoffice/misc/images/logo.png" height="100px" />
+    <img src="https://raw.githubusercontent.com/johanngrobe/ProxmoxVED/refs/heads/dev/paperless-to-lexoffice/misc/images/logo.png" height="100px" />
  </a>
 </div>
 <h1 align="center"></h1>
