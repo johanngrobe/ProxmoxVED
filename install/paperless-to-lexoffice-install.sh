@@ -25,8 +25,9 @@ $STD git clone https://github.com/stefanlachner/paperless-to-lexoffice
 msg_ok "Deployed Paperless-to-Lexoffice"
 
 msg_info "Building Paperless-to-Lexoffice"
-cd /opt/paperless-to-lexoffice/source
-$STD uv pip install -r requirements.txt
+cd /opt/paperless-to-lexoffice
+$STD uv venv
+$STD uv pip install -r source/requirements.txt
 msg_ok "Built Paperless-to-Lexoffice"
 
 msg_info "Configuring Paperless-to-Lexoffice"
@@ -60,7 +61,7 @@ After=network.target
 Type=simple
 WorkingDirectory=/opt/paperless-to-lexoffice/source
 EnvironmentFile=/opt/paperless-to-lexoffice/.env
-ExecStart=/usr/bin/python3 paperless-search.py
+ExecStart=/opt/paperless-to-lexoffice/.venv/bin/python paperless-search.py
 Restart=always
 RestartSec=5
 

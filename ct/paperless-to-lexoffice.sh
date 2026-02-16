@@ -37,8 +37,7 @@ function update_script() {
   msg_info "Updating ${APP}"
   cd /opt/paperless-to-lexoffice
   $STD git pull
-  cd /opt/paperless-to-lexoffice/source
-  $STD uv pip install -r requirements.txt
+  $STD uv pip install -r source/requirements.txt
   msg_ok "Updated ${APP}"
 
   msg_info "Starting ${APP}"
